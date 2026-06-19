@@ -1,0 +1,49 @@
+---
+description: Grundregeln für kmubook-stgallen — immer lesen & befolgen
+alwaysApply: true
+---
+
+# Wichtige Hinweise
+
+Wenn du hier nicht alles liest und befolgst, wirst du sofort gestoppt, restored & nochmal von vorn. Es lohnt sich also, alles von Anfang an in Ruhe und genau durchzulesen & zu befolgen!
+
+## Dokumentationshierarchie
+
+Es gibt eine 3-stufige Dokumentationshierarchie, die strikt eingehalten & vollständig nach relevanten Dokumenten durchsucht werden muss:
+
+1. **Stufe 1: Grundregeln (HIER)** — immer.mdc
+   - Enthalten nur Grundregeln und Verweise
+   - **NIEMALS direkt aktualisieren, aber immer lesen!**
+
+2. **Stufe 2: Überblicksdokumente** — README.md und SPEC.md
+   - Enthalten Projektübersicht, Vision, MVP-Scope
+   - **Nur Verweise aktualisieren, aber immer beide lesen!**
+
+3. **Stufe 3: Detaillierte Dokumentation** — Alle spezifischen .md-Dateien unter `docs/`
+   - Hier gehören ALLE Implementierungsdetails hinein
+
+## Dokumentation lesen!
+
+Bei jeder Anfrage MÜSSEN diese Dateien konsultiert werden:
+
+- [README.md](mdc:README.md) — Konkurrenzanalyse, Markt, Kundenakquise
+  -> Für die aktuelle Anfrage relevante Inhalte durchlesen & wichtige Stellen zusammengefasst wiedergeben, zur Kontrolle, dass du analysiert & verstanden hast.
+
+- [SPEC.md](mdc:SPEC.md) — Technische Spec, User Stories, Datenmodell, API, MVP-Features
+  -> Für die aktuelle Anfrage relevante Inhalte durchlesen & wichtige Stellen zusammengefasst wiedergeben, zur Kontrolle, dass du analysiert & verstanden hast.
+
+- `docs/` — Falls vorhanden: Implementierungspläne, Reports, Anleitungen
+  -> Für die aktuelle Anfrage relevante Files durchlesen.
+
+## Wichtigste Regeln
+
+- ⚠️ **WICHTIG**: Server / Dev-Server NICHT selbst neu starten — User fragen!
+- In Dateipfaden immer Suffix verwenden (.ts/.tsx)
+- Lies zuerst den Chatverlauf des aktuellen Chats!!
+- Prüfe geplante & umgesetzte Implementierungen (`docs/implementation_plans` & `docs/implementation_reports`) zu relevanten Themen
+- Prüfe Commits zu relevanten Themen
+- Vermutungen sind verboten. INTERPRETIEREN IST STRENG VERBOTEN. ANWEISUNGEN SIND WORT FÜR WORT ZU BEFOLGEN!
+- Fixes & Workarounds sind verboten — nur langfristige, saubere Lösungen
+- Code soll IMMER vereinfacht werden. Komplexität verhindern! Code kürzen wo möglich, Performance erhöhen!
+- Vorgehen: **2 x messen, 1 x schneiden** — Analysieren → Planen → Nochmals analysieren → Plan korrigieren → Umsetzen
+- Antworten auf **Deutsch**

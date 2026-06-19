@@ -1,0 +1,25 @@
+---
+description: Verbindlicher Deploy-Workflow — lokal entwickeln, lokal testen, commit & push
+alwaysApply: true
+---
+
+# Deploy-Workflow (verbindlich für alle Agents)
+
+1. **Lokal** entwickeln (Cursor-Workspace)
+2. **Lokal** bauen (`frontend` / `backend` `npm run build`)
+3. **Lokal** prüfen (`localhost`, ggf. `npm start` / `npm run dev`)
+4. **Erst danach** `git commit` + `git push` (nur wenn User es verlangt)
+5. **PROD-Deploy:** Nur mit expliziter User-Erlaubnis
+
+## Lokale Builds (Agents — verbindlich)
+
+**Vor jedem `npm run build` (frontend/backend):**
+
+1. **Terminals prüfen** — unter `terminals/` oder laufende Prozesse: kein paralleler `npm run build` / `tsc` für dasselbe Paket
+2. **Bei laufendem Build warten** — mindestens 2–3 Minuten, erneut prüfen; **keinen zweiten Build starten**
+3. **Ressourcen** — bei voller Auslastung (User-Hinweis oder mehrere Agent-Builds) keinen Build starten; User informieren
+4. **Frontend-Build nur wenn nötig** — nach Backend-only-Änderungen kein Frontend-Build; nach Frontend-Änderungen ein Build, nicht mehrfach hintereinander
+
+## Server-Zugriff
+
+Kein SSH, kein Deploy ohne explizite User-Erlaubnis.
