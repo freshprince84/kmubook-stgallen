@@ -1,3 +1,4 @@
 {
+  "install": "echo 'kmubook-stgallen cloud environment ready'",
   "agentCanUpdateSnapshot": true
 }
