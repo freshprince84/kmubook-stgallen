@@ -4,16 +4,13 @@ Next.js Full-Stack App für Online-Buchungen.
 
 ## Schnellstart
 
-```bash
-# PostgreSQL starten (im Repo-Root)
-docker compose up -d
+Siehe **[docs/LOCAL_DEV.md](../docs/LOCAL_DEV.md)** für die vollständige Anleitung.
 
-cd web
-cp .env.example .env
-npm install
-npx prisma db push
-npm run db:seed
-npm run dev
+```bash
+docker compose up -d
+cd web && cp .env.example .env && npm install
+npx prisma db push && npm run db:seed
+npm run dev   # ← Pflicht, sonst ERR_CONNECTION_REFUSED
 ```
 
 ## Demo-Zugang

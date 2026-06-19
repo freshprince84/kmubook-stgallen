@@ -32,10 +32,13 @@ cd web && npm run build  # erfolgreich
 
 ## Offen (Phase 2)
 
-- SMS-Reminder Cron 24h/2h
 - Twint Kunden-Anzahlung
 - Self-Service Studio-Registrierung
-- Script zum Anlegen weiterer Lead-Prototypen
+
+## Ergänzt (nach MVP)
+
+- SMS-Reminder Cron: `POST /api/cron/reminders` (CRON_SECRET)
+- Root `npm run dev` / `npm run setup` — siehe `docs/LOCAL_DEV.md`
 
 ## Dateien
 

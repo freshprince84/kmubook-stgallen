@@ -353,3 +353,4 @@ Die implementierte Anwendung liegt unter [`web/`](web/README.md).
 - **Demo-Buchung:** `/coiffeur-blum/book`
 - **Admin:** `admin@coiffeur-blum.ch` / `demo1234` (nach `npm run db:seed`)
 - **Dokumentation:** [`docs/implementation_plans/mvp-v1.md`](docs/implementation_plans/mvp-v1.md)
+- **Lokal starten:** [`docs/LOCAL_DEV.md`](docs/LOCAL_DEV.md)
