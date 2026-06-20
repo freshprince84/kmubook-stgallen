@@ -11,7 +11,9 @@ async function main() {
 
   const studio = await prisma.studio.upsert({
     where: { slug: "coiffeur-blum" },
-    update: {},
+    update: {
+      primaryColor: "#5eb3f6",
+    },
     create: {
       name: "Coiffeur Blum",
       slug: "coiffeur-blum",
@@ -19,7 +21,7 @@ async function main() {
       city: "9000 St. Gallen",
       phone: "071 220 90 90",
       email: "hallo@coiffeurblum.ch",
-      primaryColor: "#2d4a3e",
+      primaryColor: "#5eb3f6",
       openingHours: DEFAULT_OPENING_HOURS,
       trialEndsAt,
       subscriptionStatus: "trial",
