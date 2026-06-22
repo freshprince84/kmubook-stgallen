@@ -38,17 +38,26 @@ npm run dev
 cd web && npm run dev
 ```
 
-→ http://localhost:3000/coiffeur-blum/book
+→ http://localhost:3000/coiffeur-blum
+
+**Neue Seiten:** `/{slug}`, `/{slug}/leistungen`, `/{slug}/buchung`, …
 
 **`ERR_CONNECTION_REFUSED`** bedeutet: Dev-Server läuft nicht. `npm run dev` ausführen.
 
 ## Demo-Zugänge
 
-| Was | URL / Login |
+| Studio | Home | Buchung |
+|---|---|---|
+| Coiffeur Blum | http://localhost:3000/coiffeur-blum | http://localhost:3000/coiffeur-blum/buchung |
+| Physio 9000 | http://localhost:3000/physio-9000 | http://localhost:3000/physio-9000/buchung |
+| Coiffure Teresa | http://localhost:3000/coiffure-teresa | http://localhost:3000/coiffure-teresa/buchung |
+| Hair Creativ Daniel | http://localhost:3000/hair-creativ-daniel | http://localhost:3000/hair-creativ-daniel/buchung |
+| Gold Hairstyling | http://localhost:3000/gold-hairstyling | http://localhost:3000/gold-hairstyling/buchung |
+
+| Was | Login |
 |---|---|
-| Buchung | http://localhost:3000/coiffeur-blum/book |
 | Admin | http://localhost:3000/admin/login |
-| Login | admin@coiffeur-blum.ch / demo1234 |
+| Passwort | `admin@<slug>.ch` / `demo1234` |
 
 ## Neuen Lead-Prototyp
 

@@ -11,6 +11,7 @@ export async function GET(_req: Request, { params }: Params) {
   const services = await prisma.service.findMany({
     where: { studioId: studio.id, isActive: true },
     orderBy: { sortOrder: "asc" },
+    include: { category: true },
   });
 
   return NextResponse.json(services);

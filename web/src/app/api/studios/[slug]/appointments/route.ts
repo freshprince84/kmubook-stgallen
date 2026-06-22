@@ -14,6 +14,7 @@ const schema = z.object({
   customerName: z.string().min(2).max(100),
   customerPhone: z.string().min(6).max(30),
   customerEmail: z.string().email().optional().or(z.literal("")),
+  depositRequested: z.boolean().optional(),
 });
 
 export async function POST(req: Request, { params }: Params) {
@@ -65,8 +66,22 @@ export async function POST(req: Request, { params }: Params) {
       startTime: parsed.data.startTime,
       endTime,
       status: "confirmed",
+      depositPaid: Boolean(parsed.data.depositRequested && studio.depositEnabled),
     },
   });
+
+  if (parsed.data.depositRequested && studio.depositEnabled && studio.depositAmount) {
+    await prisma.payment.create({
+      data: {
+        studioId: studio.id,
+        appointmentId: appointment.id,
+        amount: studio.depositAmount,
+        provider: "mock",
+        method: "twint",
+        status: "paid",
+      },
+    });
+  }
 
   const appUrl = process.env.APP_URL ?? "http://localhost:3000";
   const cancelUrl = `${appUrl}/${slug}/cancel/${appointment.cancelToken}`;

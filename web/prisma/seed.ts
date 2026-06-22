@@ -1,62 +1,121 @@
 import { PrismaClient } from "@prisma/client";
 import { hashPassword } from "../src/lib/auth";
-import { DEFAULT_OPENING_HOURS } from "../src/lib/types";
 import { TRIAL_DAYS } from "../src/lib/billing";
 import { addDays } from "date-fns";
+import { STUDIOS, studioData } from "./seeds/studios";
 
 const prisma = new PrismaClient();
 
-async function main() {
+async function seedStudio(s: (typeof STUDIOS)[number]) {
   const trialEndsAt = addDays(new Date(), TRIAL_DAYS);
+  const legal = studioData(s);
 
   const studio = await prisma.studio.upsert({
-    where: { slug: "coiffeur-blum" },
+    where: { slug: s.slug },
     update: {
-      primaryColor: "#5eb3f6",
+      name: s.name,
+      address: s.address,
+      city: s.city,
+      phone: s.phone,
+      email: s.email,
+      primaryColor: s.primaryColor,
+      secondaryColor: s.secondaryColor,
+      templateVariant: s.templateVariant,
+      tagline: s.tagline,
+      description: s.description,
+      openingHours: s.openingHours,
+      depositEnabled: s.depositEnabled ?? false,
+      depositAmount: s.depositAmount,
+      socialInstagram: s.socialInstagram,
+      socialFacebook: s.socialFacebook,
+      socialMaps: s.socialMaps,
+      impressumHtml: legal.impressumHtml,
+      datenschutzHtml: legal.datenschutzHtml,
     },
     create: {
-      name: "Coiffeur Blum",
-      slug: "coiffeur-blum",
-      address: "Marktgasse 20",
-      city: "9000 St. Gallen",
-      phone: "071 220 90 90",
-      email: "hallo@coiffeurblum.ch",
-      primaryColor: "#5eb3f6",
-      openingHours: DEFAULT_OPENING_HOURS,
+      name: s.name,
+      slug: s.slug,
+      address: s.address,
+      city: s.city,
+      phone: s.phone,
+      email: s.email,
+      primaryColor: s.primaryColor,
+      secondaryColor: s.secondaryColor,
+      templateVariant: s.templateVariant,
+      tagline: s.tagline,
+      description: s.description,
+      openingHours: s.openingHours,
+      depositEnabled: s.depositEnabled ?? false,
+      depositAmount: s.depositAmount,
+      socialInstagram: s.socialInstagram,
+      socialFacebook: s.socialFacebook,
+      socialMaps: s.socialMaps,
+      impressumHtml: legal.impressumHtml,
+      datenschutzHtml: legal.datenschutzHtml,
       trialEndsAt,
       subscriptionStatus: "trial",
     },
   });
 
   await prisma.user.upsert({
-    where: { email: "admin@coiffeur-blum.ch" },
-    update: {},
+    where: { email: s.adminEmail },
+    update: { studioId: studio.id },
     create: {
-      email: "admin@coiffeur-blum.ch",
+      email: s.adminEmail,
       passwordHash: await hashPassword("demo1234"),
       studioId: studio.id,
       role: "owner",
     },
   });
 
-  const services = [
-    { name: "Haarschnitt Damen", duration: 60, price: 95, sortOrder: 0 },
-    { name: "Haarschnitt Herren", duration: 30, price: 55, sortOrder: 1 },
-    { name: "Färben", duration: 90, price: 120, sortOrder: 2 },
-  ];
+  await prisma.teamMember.deleteMany({ where: { studioId: studio.id } });
+  await prisma.service.deleteMany({ where: { studioId: studio.id } });
+  await prisma.serviceCategory.deleteMany({ where: { studioId: studio.id } });
 
-  for (const s of services) {
-    const existing = await prisma.service.findFirst({
-      where: { studioId: studio.id, name: s.name },
+  const categoryMap = new Map<string, string>();
+  for (let i = 0; i < s.categories.length; i++) {
+    const cat = await prisma.serviceCategory.create({
+      data: { studioId: studio.id, name: s.categories[i], sortOrder: i },
     });
-    if (!existing) {
-      await prisma.service.create({ data: { ...s, studioId: studio.id } });
-    }
+    categoryMap.set(s.categories[i], cat.id);
   }
 
-  console.log("Seed OK: coiffeur-blum");
-  console.log("  Admin: admin@coiffeur-blum.ch / demo1234");
-  console.log("  Buchung: /coiffeur-blum/book");
+  for (const svc of s.services) {
+    await prisma.service.create({
+      data: {
+        studioId: studio.id,
+        name: svc.name,
+        duration: svc.duration,
+        price: svc.price,
+        description: svc.description,
+        bookableOnline: svc.bookableOnline ?? true,
+        sortOrder: svc.sortOrder,
+        categoryId: svc.category ? categoryMap.get(svc.category) : undefined,
+      },
+    });
+  }
+
+  for (const member of s.team) {
+    await prisma.teamMember.create({
+      data: {
+        studioId: studio.id,
+        name: member.name,
+        role: member.role,
+        bio: member.bio,
+        sortOrder: member.sortOrder,
+      },
+    });
+  }
+
+  return studio;
+}
+
+async function main() {
+  for (const s of STUDIOS) {
+    const studio = await seedStudio(s);
+    console.log(`Seed OK: ${studio.slug} → /${studio.slug}`);
+  }
+  console.log("\nAdmin-Logins: admin@<slug>.ch / demo1234");
 }
 
 main()

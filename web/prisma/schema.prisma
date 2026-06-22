@@ -21,6 +21,19 @@ enum AppointmentStatus {
   completed
 }
 
+enum TemplateVariant {
+  salon_luxe
+  care_calm
+  salon_solo
+}
+
+enum PaymentStatus {
+  pending
+  paid
+  failed
+  refunded
+}
+
 model Studio {
   id                   String             @id @default(uuid())
   name                 String
@@ -32,7 +45,22 @@ model Studio {
   timezone             String             @default("Europe/Zurich")
   openingHours         Json
   primaryColor         String             @default("#1e3a5f")
+  secondaryColor       String?
   logoUrl              String?
+  templateVariant      TemplateVariant    @default(salon_luxe)
+  tagline              String?
+  description          String?
+  heroImageUrl         String?
+  socialInstagram      String?
+  socialFacebook       String?
+  socialMaps           String?
+  impressumHtml        String?
+  datenschutzHtml      String?
+  customDomain         String?            @unique
+  depositEnabled       Boolean            @default(false)
+  depositAmount        Float?
+  twintStoreUuid       String?
+  paymentProvider      String?
   trialEndsAt          DateTime
   subscriptionStatus   SubscriptionStatus @default(trial)
   stripeCustomerId     String?
@@ -43,8 +71,11 @@ model Studio {
   updatedAt            DateTime           @updatedAt
   users                User[]
   services             Service[]
+  categories           ServiceCategory[]
+  teamMembers          TeamMember[]
   appointments         Appointment[]
   smsLogs              SmsLog[]
+  payments             Payment[]
 }
 
 model User {
@@ -57,17 +88,40 @@ model User {
   createdAt    DateTime @default(now())
 }
 
+model ServiceCategory {
+  id        String    @id @default(uuid())
+  studioId  String
+  studio    Studio    @relation(fields: [studioId], references: [id], onDelete: Cascade)
+  name      String
+  sortOrder Int       @default(0)
+  services  Service[]
+}
+
 model Service {
-  id           String        @id @default(uuid())
-  studioId     String
-  studio       Studio        @relation(fields: [studioId], references: [id], onDelete: Cascade)
-  name         String
-  duration     Int
-  price        Float
-  description  String?
-  isActive     Boolean       @default(true)
-  sortOrder    Int           @default(0)
-  appointments Appointment[]
+  id             String           @id @default(uuid())
+  studioId       String
+  studio         Studio           @relation(fields: [studioId], references: [id], onDelete: Cascade)
+  categoryId     String?
+  category       ServiceCategory? @relation(fields: [categoryId], references: [id], onDelete: SetNull)
+  name           String
+  duration       Int
+  price          Float
+  description    String?
+  isActive       Boolean          @default(true)
+  bookableOnline Boolean          @default(true)
+  sortOrder      Int              @default(0)
+  appointments   Appointment[]
+}
+
+model TeamMember {
+  id        String  @id @default(uuid())
+  studioId  String
+  studio    Studio  @relation(fields: [studioId], references: [id], onDelete: Cascade)
+  name      String
+  role      String?
+  bio       String?
+  imageUrl  String?
+  sortOrder Int     @default(0)
 }
 
 model Appointment {
@@ -86,10 +140,27 @@ model Appointment {
   cancelToken     String            @unique @default(uuid())
   reminder24hSent Boolean           @default(false)
   reminder2hSent  Boolean           @default(false)
+  depositPaid     Boolean           @default(false)
   createdAt       DateTime          @default(now())
   updatedAt       DateTime          @updatedAt
+  payments        Payment[]
 
   @@index([studioId, date])
+}
+
+model Payment {
+  id            String        @id @default(uuid())
+  studioId      String
+  studio        Studio        @relation(fields: [studioId], references: [id], onDelete: Cascade)
+  appointmentId String
+  appointment   Appointment   @relation(fields: [appointmentId], references: [id], onDelete: Cascade)
+  amount        Float
+  currency      String        @default("CHF")
+  provider      String        @default("mock")
+  providerRef   String?
+  method        String        @default("twint")
+  status        PaymentStatus @default(pending)
+  createdAt     DateTime      @default(now())
 }
 
 model SmsLog {

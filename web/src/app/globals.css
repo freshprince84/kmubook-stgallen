@@ -3,19 +3,50 @@
 @tailwind utilities;
 
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+  --background: #faf9f7;
+  --foreground: #1a1a1a;
+  --font-display: var(--font-cormorant);
+  --font-body: var(--font-inter);
+  --studio-primary: #1e3a5f;
+  --studio-secondary: #f3f1ed;
+  --studio-surface: #faf9f7;
+  --studio-surface-muted: #f3f1ed;
+  --studio-text: #1a1a1a;
+  --studio-text-muted: #6b7280;
+  --studio-hero-gradient: linear-gradient(145deg, #1e3a5f22 0%, #faf9f7 50%);
 }
 
 body {
-  color: var(--foreground);
-  background: var(--background);
-  font-family: Arial, Helvetica, sans-serif;
+  color: var(--studio-text);
+  background: var(--studio-surface);
+  font-family: var(--font-body), system-ui, sans-serif;
+}
+
+@layer components {
+  .glass-nav {
+    @apply border border-white/40 bg-white/70 shadow-[0_8px_32px_rgba(0,0,0,0.06)] backdrop-blur-xl;
+  }
+
+  .glass-card {
+    @apply rounded-2xl border border-white/50 bg-white/80 shadow-[0_8px_32px_rgba(0,0,0,0.06)] backdrop-blur-md;
+  }
+
+  .btn-primary {
+    @apply inline-flex items-center justify-center rounded-full px-6 py-3 text-sm font-semibold text-white shadow-lg transition hover:opacity-90 disabled:opacity-50;
+    background-color: var(--studio-primary);
+  }
+
+  .btn-ghost {
+    @apply inline-flex items-center justify-center rounded-full border border-black/10 bg-white/80 px-6 py-3 text-sm font-semibold transition hover:bg-white;
+    color: var(--studio-text);
+  }
+
+  .section-title {
+    font-family: var(--font-display), serif;
+    @apply text-3xl font-medium tracking-tight md:text-4xl;
+  }
+
+  .page-container {
+    @apply mx-auto max-w-6xl px-4 sm:px-6;
+  }
 }

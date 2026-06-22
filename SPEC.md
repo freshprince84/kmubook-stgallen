@@ -291,9 +291,10 @@ Siehe [docs/pricing-gtm.md](docs/pricing-gtm.md) für Details.
 
 1. ✅ Repo erstellt (https://github.com/freshprince84/kmubook-stgallen)
 2. ✅ MVP Web-App (`web/`) — siehe [docs/implementation_reports/mvp-v1.md](docs/implementation_reports/mvp-v1.md)
-3. ⬜ PostgreSQL starten + Seed + lokal testen
-4. ⬜ Erste Beta-Kunden (Coiffeur Blum etc.) anrufen
-5. ⬜ Stripe + SMS-Provider konfigurieren
+3. ✅ Prototyp Top 5 — siehe [docs/implementation_reports/prototype-v1.md](docs/implementation_reports/prototype-v1.md)
+4. ⬜ PostgreSQL starten + Seed + lokal testen
+5. ⬜ Erste Beta-Kunden (Coiffeur Blum etc.) anrufen
+6. ⬜ Stripe + SMS-Provider konfigurieren
 
 ---
 

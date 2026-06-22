@@ -35,17 +35,20 @@ Zentrale Übersicht aller Projekt-Dokumente. Hierarchie gemäss `.cursor/rules/i
 | [README.md](../README.md) | Konkurrenz, Markt, Kundenakquise, Fördergelder | Gut (Business) |
 | [SPEC.md](../SPEC.md) | Vision, User Stories, Datenmodell, MVP-Scope, Risiken | Mittel (Spec, aber veraltet teilweise) |
 
-### Stufe 3 — Planung & Umsetzung
+### Stufe 3 — Planung & Umsetzung (`docs/`)
 
 | Dokument | Branch | Status | Inhalt |
 |---|---|---|---|
-| [implementation_plans/mvp-v1.md](implementation_plans/mvp-v1.md) | `cursor/booking-mvp-2514` | ✅ Umgesetzt | MVP-Scope, Stack, API-Auszug |
-| [implementation_plans/prototype-top5.md](implementation_plans/prototype-top5.md) | `cursor/prototype-top5-plan-2514` | 📋 Nur Plan | Website-Ersatz, Design, Twint, 5 Leads |
-| [implementation_reports/mvp-v1.md](implementation_reports/mvp-v1.md) | `cursor/booking-mvp-2514` | ✅ Report | Was umgesetzt wurde |
+| [architecture/overview.md](architecture/overview.md) | prototype-design | ✅ | C4, Routing, Content-Strategie |
+| [architecture/adr/](architecture/adr/) | prototype-design | ✅ | ADR-001–003 |
+| [requirements/functional.md](requirements/functional.md) | prototype-design | ✅ | REQ-IDs + Traceability |
+| [design/design-system.md](design/design-system.md) | prototype-design | ✅ | Tokens, Komponenten |
+| [operations/environments.md](operations/environments.md) | prototype-design | ✅ | Lokal / Cloud / Prod |
+| [implementation_plans/mvp-v1.md](implementation_plans/mvp-v1.md) | `cursor/booking-mvp-2514` | ✅ Umgesetzt | MVP-Scope |
+| [implementation_plans/prototype-top5.md](implementation_plans/prototype-top5.md) | prototype-top5-plan | ✅ Plan | Website-Ersatz, 5 Leads |
+| [implementation_reports/mvp-v1.md](implementation_reports/mvp-v1.md) | booking-mvp | ✅ | MVP Report |
 | [pricing-gtm.md](pricing-gtm.md) | main | ✅ | Preise, Sales-Flow |
 | [LOCAL_DEV.md](LOCAL_DEV.md) | main | ✅ | Lokales Setup |
-
-### App
 
 | Dokument | Inhalt |
 |---|---|
@@ -56,7 +59,7 @@ Zentrale Übersicht aller Projekt-Dokumente. Hierarchie gemäss `.cursor/rules/i
 | PR | Branch | Inhalt |
 |---|---|---|
 | #1 | `cursor/booking-mvp-2514` | MVP-Implementierung |
-| #2 | `cursor/prototype-top5-plan-2514` | Prototyp-Plan Top 5 |
+| #3 | `cursor/prototype-design-2514` | Prototyp-Implementierung |
 
 ---
 
