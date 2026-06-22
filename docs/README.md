@@ -49,6 +49,7 @@ Zentrale Übersicht aller Projekt-Dokumente. Hierarchie gemäss `.cursor/rules/i
 | [implementation_reports/mvp-v1.md](implementation_reports/mvp-v1.md) | booking-mvp | ✅ | MVP Report |
 | [pricing-gtm.md](pricing-gtm.md) | main | ✅ | Preise, Sales-Flow |
 | [LOCAL_DEV.md](LOCAL_DEV.md) | main | ✅ | Lokales Setup |
+| [CLOUD_DEV.md](CLOUD_DEV.md) | main | ✅ | **Cloud + Port-Forwarding** |
 
 | Dokument | Inhalt |
 |---|---|
@@ -70,17 +71,17 @@ Aktuell fehlen für eine vollständige, umsetzbare Planungsbasis:
 | Standard-Dokument | Status | Priorität |
 |---|---|---|
 | Dokumentations-Index | ✅ Diese Datei | — |
-| ADRs (Architecture Decision Records) | ❌ | Hoch |
-| Anforderungskatalog mit IDs + Traceability | ❌ (nur User Stories in SPEC) | Hoch |
-| Technisches Design (TDD) / API-Spec (OpenAPI) | ❌ (API nur als Liste) | Hoch |
-| NFRs (Performance, Security, DSGVO) | ❌ teilweise in SPEC | Hoch |
-| Teststrategie + Akzeptanztests | ❌ | Hoch |
-| Deployment-/Umgebungsmatrix | ❌ (nur LOCAL_DEV) | Mittel |
-| Design-Spec (Figma/Tokens/Komponenten-Matrix) | ❌ (nur Text in prototype-top5) | Hoch für Prototyp |
-| Content-Migrations-Checklisten (pro Lead) | ⚠️ in prototype-top5, nicht separat | Mittel |
-| Roadmap mit Meilensteinen + Definition of Done | ⚠️ verstreut | Mittel |
+| ADRs (Architecture Decision Records) | ✅ 3 ADRs | — |
+| Anforderungskatalog mit IDs + Traceability | ✅ functional.md | — |
+| Technisches Design (TDD) / API-Spec (OpenAPI) | ⚠️ overview only | Mittel |
+| NFRs (Performance, Security, DSGVO) | ⚠️ teilweise | Mittel |
+| Teststrategie + Akzeptanztests | ❌ | Mittel |
+| Deployment-/Umgebungsmatrix | ✅ environments.md | — |
+| Design-Spec (Figma/Tokens/Komponenten-Matrix) | ✅ design-system.md | — |
+| Content-Migrations-Checklisten (pro Lead) | ⚠️ in Seed + prototype-top5 | Niedrig |
+| Roadmap mit Meilensteinen + Definition of Done | ⚠️ verstreut | Niedrig |
 
-**Fazit:** Die bestehenden Pläne sind gute **Arbeitsnotizen** und Sales-Orientierung, aber noch **kein vollständiges professionelles Planungspaket** für qualitativ hochwertige Umsetzung.
+**Fazit:** Planungsbasis für Prototyp v1 ist **ausreichend**. Offen: OpenAPI, NFR-Doc, Teststrategie.
 
 ---
 

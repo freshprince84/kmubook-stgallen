@@ -1,12 +1,15 @@
 {
-  "install": "cd /workspace/web && npm install && npx prisma generate",
-  "start": "sudo service postgresql start 2>/dev/null; cd /workspace/web && npx prisma db push --skip-generate 2>/dev/null; npm run db:seed 2>/dev/null; npm run dev -- -H 0.0.0.0 -p 3000",
+  "install": "cd /workspace/web && npm install && ./node_modules/.bin/prisma generate",
+  "start": "sudo service postgresql start 2>/dev/null; cd /workspace/web && ./node_modules/.bin/prisma db push --skip-generate 2>/dev/null; npm run db:seed 2>/dev/null",
   "terminals": [
     {
       "name": "dev-server",
-      "command": "sudo service postgresql start 2>/dev/null; cd /workspace/web && npm run dev -- -H 0.0.0.0 -p 3000"
+      "description": "Next.js — Port 3000 für Browser-Forwarding",
+      "command": "cd /workspace/web && npm run dev -- -H 0.0.0.0 -p 3000"
     }
   ],
-  "ports": [3000],
+  "ports": [
+    { "port": 3000, "name": "next-dev" }
+  ],
   "agentCanUpdateSnapshot": true
 }
