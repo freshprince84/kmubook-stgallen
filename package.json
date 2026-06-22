@@ -1,0 +1,13 @@
+{
+  "name": "kmubook-stgallen",
+  "private": true,
+  "scripts": {
+    "db:up": "docker compose up -d",
+    "db:down": "docker compose down",
+    "setup": "npm run db:up && cd web && npm install && npx prisma db push && npm run db:seed",
+    "dev": "cd web && npm run dev",
+    "build": "cd web && npm run build",
+    "seed": "cd web && npm run db:seed",
+    "studio:new": "cd web && npx tsx scripts/create-studio.ts"
+  }
+}

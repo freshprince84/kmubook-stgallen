@@ -1,0 +1,103 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+enum SubscriptionStatus {
+  trial
+  active
+  past_due
+  cancelled
+}
+
+enum AppointmentStatus {
+  booked
+  confirmed
+  cancelled
+  completed
+}
+
+model Studio {
+  id                   String             @id @default(uuid())
+  name                 String
+  slug                 String             @unique
+  address              String?
+  city                 String             @default("St. Gallen")
+  phone                String?
+  email                String?
+  timezone             String             @default("Europe/Zurich")
+  openingHours         Json
+  primaryColor         String             @default("#1e3a5f")
+  logoUrl              String?
+  trialEndsAt          DateTime
+  subscriptionStatus   SubscriptionStatus @default(trial)
+  stripeCustomerId     String?
+  stripeSubscriptionId String?
+  smsUsedThisMonth     Int                @default(0)
+  smsQuotaMonthly      Int                @default(50)
+  createdAt            DateTime           @default(now())
+  updatedAt            DateTime           @updatedAt
+  users                User[]
+  services             Service[]
+  appointments         Appointment[]
+  smsLogs              SmsLog[]
+}
+
+model User {
+  id           String   @id @default(uuid())
+  studioId     String
+  studio       Studio   @relation(fields: [studioId], references: [id], onDelete: Cascade)
+  email        String   @unique
+  passwordHash String
+  role         String   @default("owner")
+  createdAt    DateTime @default(now())
+}
+
+model Service {
+  id           String        @id @default(uuid())
+  studioId     String
+  studio       Studio        @relation(fields: [studioId], references: [id], onDelete: Cascade)
+  name         String
+  duration     Int
+  price        Float
+  description  String?
+  isActive     Boolean       @default(true)
+  sortOrder    Int           @default(0)
+  appointments Appointment[]
+}
+
+model Appointment {
+  id              String            @id @default(uuid())
+  studioId        String
+  studio          Studio            @relation(fields: [studioId], references: [id], onDelete: Cascade)
+  serviceId       String
+  service         Service           @relation(fields: [serviceId], references: [id])
+  customerName    String
+  customerPhone   String
+  customerEmail   String?
+  date            DateTime
+  startTime       String
+  endTime         String
+  status          AppointmentStatus @default(booked)
+  cancelToken     String            @unique @default(uuid())
+  reminder24hSent Boolean           @default(false)
+  reminder2hSent  Boolean           @default(false)
+  createdAt       DateTime          @default(now())
+  updatedAt       DateTime          @updatedAt
+
+  @@index([studioId, date])
+}
+
+model SmsLog {
+  id        String   @id @default(uuid())
+  studioId  String
+  studio    Studio   @relation(fields: [studioId], references: [id], onDelete: Cascade)
+  toPhone   String
+  message   String
+  type      String
+  createdAt DateTime @default(now())
+}
