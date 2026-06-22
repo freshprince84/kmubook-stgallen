@@ -343,3 +343,14 @@ Wann passt es bei Ihnen — heute Nachmittag oder morgen Vormittag?'
 ---
 
 *Erstellt: Juni 2026 | Recherche: Web-Suche, Web-Fetch | Stand: Alle Angaben ohne Gewähr — vor finalen Entscheiden selbst verifizieren.*
+
+---
+
+## 6. WEB-APP (MVP)
+
+Die implementierte Anwendung liegt unter [`web/`](web/README.md).
+
+- **Demo-Buchung:** `/coiffeur-blum/book`
+- **Admin:** `admin@coiffeur-blum.ch` / `demo1234` (nach `npm run db:seed`)
+- **Dokumentation:** [`docs/README.md`](docs/README.md) (Index) · [`docs/implementation_plans/mvp-v1.md`](docs/implementation_plans/mvp-v1.md) · Prototyp Top 5: [`docs/implementation_plans/prototype-top5.md`](docs/implementation_plans/prototype-top5.md)
+- **Lokal starten:** [`docs/LOCAL_DEV.md`](docs/LOCAL_DEV.md)

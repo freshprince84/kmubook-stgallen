@@ -1,4 +1,20 @@
 {
-  "install": "echo 'kmubook-stgallen cloud environment ready'",
+  "install": "cd /workspace/web && npm install && ./node_modules/.bin/prisma generate && curl -sL https://github.com/cloudflare/cloudflared/releases/latest/download/cloudflared-linux-amd64 -o /tmp/cloudflared && chmod +x /tmp/cloudflared",
+  "start": "sudo service postgresql start 2>/dev/null; cd /workspace/web && ./node_modules/.bin/prisma db push --skip-generate 2>/dev/null; npm run db:seed 2>/dev/null",
+  "terminals": [
+    {
+      "name": "dev-server",
+      "description": "Next.js auf Port 3000 (Cloud VM)",
+      "command": "cd /workspace/web && npm run dev -- -H 0.0.0.0 -p 3000"
+    },
+    {
+      "name": "preview-tunnel",
+      "description": "Öffentliche Preview-URL (trycloudflare) — falls localhost:3000 nicht forwarded wird",
+      "command": "bash /workspace/scripts/preview-tunnel.sh"
+    }
+  ],
+  "ports": [
+    { "port": 3000, "name": "next-dev" }
+  ],
   "agentCanUpdateSnapshot": true
 }

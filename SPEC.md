@@ -56,6 +56,9 @@
 7. **Admin-Kalender** — Tages-/Wochenansicht aller Buchungen
 8. **Minimal-Backoffice** — Dashboard mit Buchungen, Kunden
 
+### Phase 1b — Sales-Prototypen (Top 5 Leads)
+Vollständiger Plan: [`docs/implementation_plans/prototype-top5.md`](docs/implementation_plans/prototype-top5.md) — Website-Ersatz, Premium-Design, Content-Migration, Twint, Custom Domain.
+
 ### Nice to Have (Phase 2)
 - Twint-Integration für Anzahlungen
 - QR-Rechnung für Einnahmen
@@ -74,12 +77,12 @@
 ## 4. TECHNISCHES DESIGN
 
 ### 4.1 Stack
+
 | Komponente | Technologie | Begründung |
 |---|---|---|
-| **Frontend** | React 18 + TypeScript | Patrick kennt es, schnelle Prototypen |
-| **Backend** | Node.js + Express oder Fastify | Passt zum Stack |
-| **Datenbank** | PostgreSQL | Zuverlässig, gut für relationale Daten |
-| **SMS** |local CH SMS Gateway (z.B. SMS Pirates, AnyMundi) oder Twilio mit CH-Nummer | CH-SMS mit lokaler Nummer |
+| **App** | Next.js 15 + TypeScript | Full-Stack, schnell solo — siehe `web/` |
+| **Datenbank** | PostgreSQL + Prisma | Wie geplant, relationales Modell |
+| **SMS** | Abstraktion + Mock/HTTP | CH-SMS mit lokaler Nummer |
 | **Twint** | Twint API / SIX Pay | Anzahlungen |
 | **QR-Rechnung** | qr-spp, einheimische CH Lib | Schweizer Zahlungsstandard |
 | **Hosting** | Hetzner Cloud (€4/Monat) oder VPS | Günstig, CH-nah |
@@ -234,13 +237,14 @@ Admin:
 
 ## 6. PRICING
 
+Siehe [docs/pricing-gtm.md](docs/pricing-gtm.md) für Details.
+
 | Plan | Preis | Features |
 |------|-------|----------|
-| **Starter** | CHF 49/Monat | 1 Studio, 10 Services, SMS-Erinnerungen, Basic Kalender |
-| **Professional** | CHF 79/Monat | Alles + Twint-Anzahlungen, QR-Rechnungen, mehr Services |
-| **Gruppen** | auf Anfrage | Multi-Standort, Team-Features |
-
-**Early Adopter:** CHF 39/Monat für erste 10 Kunden (6 Monate Garantie)
+| **Starter (Trial)** | 30 Tage gratis | Volle Funktion |
+| **Starter** | CHF 39/Monat | 1 Studio, Buchungen, 50 SMS/Mt. |
+| **SMS-Zusatz** | CHF 0.10/SMS | Über Limit |
+| **Professional** | CHF 79/Monat | Phase 2: Twint, 200 SMS, QR-Rechnung |
 
 ---
 
@@ -286,10 +290,11 @@ Admin:
 ## 9. NÄCHSTE SCHRITTE
 
 1. ✅ Repo erstellt (https://github.com/freshprince84/kmubook-stgallen)
-2. ⬜ README.md aktualisieren mit SPEC.md Inhalten
-3. ⬜ Projektstruktur aufsetzen (React + Node + PostgreSQL)
-4. ⬜ Auth-System
-5. ⬜ 1–2 Beta-Kunden für Feedback
+2. ✅ MVP Web-App (`web/`) — siehe [docs/implementation_reports/mvp-v1.md](docs/implementation_reports/mvp-v1.md)
+3. ✅ Prototyp Top 5 — siehe [docs/implementation_reports/prototype-v1.md](docs/implementation_reports/prototype-v1.md)
+4. ⬜ PostgreSQL starten + Seed + lokal testen
+5. ⬜ Erste Beta-Kunden (Coiffeur Blum etc.) anrufen
+6. ⬜ Stripe + SMS-Provider konfigurieren
 
 ---
 
