@@ -1,59 +1,58 @@
 # Cloud-Entwicklung (Cursor) — Browser-Zugriff
 
-**Wichtig:** Die App läuft **nur auf der Cursor Cloud VM**, nicht auf deinem PC.  
-`localhost:3000` im Browser = Port-Forwarding von Cursor Desktop zur Cloud.
+**Wichtig:** Die App läuft **nur auf der Cursor Cloud VM**, nicht auf deinem PC.
 
-## Wenn `ERR_CONNECTION_REFUSED`
+## Zwei Wege zum Browser
 
-### 1. Server auf der Cloud (Agent prüft das)
+| Weg | URL | Wann |
+|---|---|---|
+| **A) Preview-Tunnel (empfohlen)** | Siehe `.preview-url.txt` oder Terminal `preview-tunnel` | Ports-Panel leer / `ERR_CONNECTION_REFUSED` |
+| **B) Port-Forwarding** | `http://localhost:3000/...` | Nur wenn Cursor Desktop Port 3000 forwarded |
 
-Auf der VM muss laufen:
+---
 
-```bash
-next dev -H 0.0.0.0 -p 3000
-```
+## A) Preview-Tunnel (Agent richtet ein)
 
-Status: Terminal **dev-server** in der Agent-Session → `✓ Ready`.
+Wenn `localhost:3000` **ERR_CONNECTION_REFUSED** zeigt, liegt das fast immer am **fehlenden Cursor-Tunnel** — nicht am Server.
 
-### 2. Port in Cursor Desktop manuell forwarden (häufigste Lösung)
+Der Agent startet `cloudflared` auf der Cloud-VM → öffentliche HTTPS-URL:
 
-Bekannter Bug: Ports aus `environment.json` → `terminals` werden **nicht immer** automatisch weitergeleitet.
+**Aktuell (Beispiel):** URL in `.preview-url.txt` im Repo-Root oder im Terminal **preview-tunnel** nach Zeile `https://….trycloudflare.com`.
 
-1. **Cursor Desktop** öffnen (nicht nur cursor.com im Browser)
-2. **Agents**-Fenster → diesen Agent öffnen / aktivieren
-3. Oben rechts: **Stecker-Icon** (Ports) klicken
-4. **Forward a Port** → `3000` eingeben → Enter
-5. Status muss **Forwarded** sein
-6. Dann: http://localhost:3000/coiffeur-blum
-
-### 3. Auto-Forward prüfen
-
-In den Ports-Einstellungen: **Auto Forward Ports** = an.
-
-### 4. Lokaler Konflikt auf deinem PC
-
-Falls auf deinem Mac/PC schon etwas auf Port 3000 läuft, zeigt das Ports-Panel ggf. einen **anderen** lokalen Port (z. B. 3001). Die **angezeigte URL** im Ports-Panel verwenden.
-
-### 5. Agent neu starten
-
-Nach Änderung an `.cursor/environment.json`:
-
-- Neuen Cloud-Agent-Lauf auf Branch `cursor/prototype-design-2514` starten
-- Oder Snapshot/Environment im Cursor-Dashboard neu aufsetzen
-
-## Demo-URLs (nach erfolgreichem Forward)
-
-| Studio | URL |
+| Studio | Pfad |
 |---|---|
-| Coiffeur Blum | http://localhost:3000/coiffeur-blum |
-| Buchung | http://localhost:3000/coiffeur-blum/buchung |
+| Coiffeur Blum | `/coiffeur-blum` |
+| Buchung | `/coiffeur-blum/buchung` |
+| Admin | `/admin/login` |
 
-Admin: http://localhost:3000/admin/login — `admin@coiffeur-blum.ch` / `demo1234`
+Diese URL im **normalen Browser** öffnen (Chrome/Safari) — **kein** Port-Forwarding nötig.
 
-## Technisch
+---
+
+## B) localhost:3000 (Cursor Port-Forwarding)
 
 ```
-Dein Browser → localhost:3000 → Cursor Desktop Tunnel → Cloud VM :3000 → Next.js
+Dein Browser → localhost:3000 → Cursor Desktop Tunnel → Cloud VM :3000
 ```
 
-Ohne aktiven Tunnel in Cursor Desktop gibt es **keine** Verbindung — auch wenn der Server auf der Cloud läuft.
+**Der Agent kann diesen Tunnel nicht selbst aktivieren** — das macht nur Cursor Desktop (Ports-Panel / Auto-Forward).
+
+Wenn das Ports-Panel **leer** ist: bekannter Cursor-Bug bei Cloud Agents → **Tunnel (A) nutzen**.
+
+---
+
+## Diagnose: „Browser error to investigate“
+
+| Check | Auf der VM | Bedeutung |
+|---|---|---|
+| `curl http://127.0.0.1:3000` | 200 | Server OK |
+| `localhost:3000` im Desktop-Browser | REFUSED | Tunnel fehlt → Preview-URL nutzen |
+
+---
+
+## Nach Agent-Neustart
+
+1. Terminal `dev-server` → `✓ Ready`
+2. Terminal `preview-tunnel` → neue `trycloudflare.com`-URL abwarten
+3. URL + `/coiffeur-blum` im Browser öffnen
+
