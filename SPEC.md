@@ -56,6 +56,9 @@
 7. **Admin-Kalender** — Tages-/Wochenansicht aller Buchungen
 8. **Minimal-Backoffice** — Dashboard mit Buchungen, Kunden
 
+### Phase 1b — Sales-Prototypen (Top 5 Leads)
+Vollständiger Plan: [`docs/implementation_plans/prototype-top5.md`](docs/implementation_plans/prototype-top5.md) — Website-Ersatz, Premium-Design, Content-Migration, Twint, Custom Domain.
+
 ### Nice to Have (Phase 2)
 - Twint-Integration für Anzahlungen
 - QR-Rechnung für Einnahmen
