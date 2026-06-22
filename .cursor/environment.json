@@ -1,4 +1,12 @@
 {
-  "install": "echo 'kmubook-stgallen cloud environment ready'",
+  "install": "cd /workspace/web && npm install && npx prisma generate",
+  "start": "sudo service postgresql start 2>/dev/null; cd /workspace/web && npx prisma db push --skip-generate 2>/dev/null; npm run db:seed 2>/dev/null; npm run dev -- -H 0.0.0.0 -p 3000",
+  "terminals": [
+    {
+      "name": "dev-server",
+      "command": "sudo service postgresql start 2>/dev/null; cd /workspace/web && npm run dev -- -H 0.0.0.0 -p 3000"
+    }
+  ],
+  "ports": [3000],
   "agentCanUpdateSnapshot": true
 }
